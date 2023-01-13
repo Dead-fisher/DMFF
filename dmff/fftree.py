@@ -56,7 +56,6 @@ class Node:
 
 class ForcefieldTree(Node):
     def __init__(self, tag, **attrs):
-
         super().__init__(tag, **attrs)
 
     def get_nodes(self, parser:str)->List[Node]:
@@ -196,6 +195,8 @@ class XMLParser:
     def parse_node(self, root):
 
         node = ForcefieldTree(tag=root.tag, **root.attrib)
+        if root.text is not None:
+            node.attrs["text"] = root.text
         children = list(map(self.parse_node, root))
         if children:
             node.add_children(children)
